@@ -129,8 +129,8 @@ def init_serial():
 
 def position():
 	#opens a the saved txt file, parses for lat and long, displays on map
-    #longitude is not always negaitve... and latitude two
-    #Reading the lat_direction (South/North) and lon_direction (East/West) attributes of the NMEA frame allows you to determine the sign.
+        #longitude is not always negaitve... and latitude two
+        #Reading the lat_direction (South/North) and lon_direction (East/West) attributes of the NMEA frame allows you to determine the sign.
 	global lat, long, lat_input, long_input, pos_x, pos_y, altitude
 	global BLX, BLY, TRX, TRY
 	
@@ -150,22 +150,21 @@ def position():
 					gpgga.parse(line)
 					lats = gpgga.latitude
 					longs = gpgga.longitude
-					
+
 					#convert degrees,decimal minutes to decimal degrees 
 					lat1 = (float(lats[2]+lats[3]+lats[4]+lats[5]+lats[6]+lats[7]+lats[8]))/60
 					lat = (float(lats[0]+lats[1])+lat1)
 					long1 = (float(longs[3]+longs[4]+longs[5]+longs[6]+longs[7]+longs[8]+longs[9]))/60
 					long = (float(longs[0]+longs[1]+longs[2])+long1)
-					
+
 					#calc position N, S, E, W
 					pos_y = lat
 					if (gpgga.lat_direction) == "S" :
 						pos_y = -pos_y	#lattitude Sud is negative
 					pos_x = long
 					if (gpgga.lon_direction) == "W" :
-                        pos_x = -pos_x	#longitude West is negative
-			
-					
+                                        	pos_x = -pos_x	#longitude West is negative
+
 					#plot the x and y positions
 					plt.scatter(x=[pos_x], y=[pos_y], s = 5, c='r')
 
